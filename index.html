@@ -7,13 +7,10 @@
 <title>Happy Birthday 🎉</title>
 
 <style>
-*{
-  margin:0;padding:0;box-sizing:border-box;
-  -webkit-tap-highlight-color: transparent;
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%}
 body{
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   min-height:100vh;
   color:white;
   text-align:center;
@@ -21,511 +18,253 @@ body{
   background:linear-gradient(135deg,#ff9ecf,#ffc3e6,#c8b6ff);
 }
 
-/* ===== BACKGROUND ANIMATION ===== */
-.bg{
-  position:fixed; inset:0;
-  overflow:hidden;
-  pointer-events:none;
-}
+/* BACKGROUND */
+.bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;}
 .bg .balloon-bg{
-  position:absolute;
-  bottom:-120px;
-  width:70px; height:90px;
-  border-radius:50%;
-  opacity:.33;
-  animation:rise linear infinite;
+  position:absolute;bottom:-120px;width:70px;height:90px;border-radius:50%;
+  opacity:.33;animation:rise linear infinite;
   box-shadow: inset -12px -14px rgba(0,0,0,.15);
 }
 .bg .balloon-bg:after{
-  content:"";
-  position:absolute;
-  width:2px;height:70px;
+  content:"";position:absolute;width:2px;height:70px;
   background:rgba(255,255,255,.65);
-  left:50%; bottom:-70px;
-  transform:translateX(-50%);
+  left:50%;bottom:-70px;transform:translateX(-50%);
 }
 @keyframes rise{
-  from{ transform:translateY(0) translateX(0) }
-  to{ transform:translateY(-120vh) translateX(var(--drift)) }
+  from{transform:translateY(0) translateX(0)}
+  to{transform:translateY(-120vh) translateX(var(--drift))}
 }
 .bg .paper{
-  position:absolute;
-  top:-20px;
-  width:10px; height:14px;
-  opacity:.55;
-  border-radius:2px;
-  animation:fall linear infinite;
+  position:absolute;top:-20px;width:10px;height:14px;
+  opacity:.55;border-radius:2px;animation:fall linear infinite;
 }
 @keyframes fall{
-  to{ transform:translateY(120vh) rotate(720deg) }
+  to{transform:translateY(120vh) rotate(720deg)}
 }
 
-/* ===== LAYOUT ===== */
-.wrap{
-  position:relative;
-  z-index:2;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-}
+/* LAYOUT */
+.wrap{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;}
 .container{
-  width:95%;
-  max-width:560px;
-  background:rgba(0,0,0,.22);
-  padding:24px;
-  border-radius:22px;
-  backdrop-filter:blur(12px);
+  width:95%;max-width:560px;background:rgba(0,0,0,.22);
+  padding:24px;border-radius:22px;backdrop-filter:blur(12px);
   box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
-
 h1,h2{font-weight:900}
-p{opacity:.95}
-.note{
-  margin-top:10px;
-  font-size:14px;
-  opacity:.85;
-  line-height:1.4;
-}
-
+.note{margin-top:10px;font-size:14px;opacity:.85;line-height:1.4;}
 .btn{
-  width:100%;
-  padding:12px 18px;
-  border:none;
-  border-radius:12px;
-  background:white;
-  color:#ff4fa3;
-  font-weight:800;
-  cursor:pointer;
-  margin-top:16px;
-  outline:none;
+  width:100%;padding:12px 18px;border:none;border-radius:12px;
+  background:white;color:#ff4fa3;font-weight:800;
+  cursor:pointer;margin-top:16px;
 }
 
-/* ===== GAME ===== */
-.grid{
-  margin-top:16px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-.card{
-  height:92px;
-  border-radius:16px;
-  position:relative;
-  cursor:pointer;
-  transform-style:preserve-3d;
-  transition:transform .45s;
-  user-select:none;
-}
-.card.flipped{ transform:rotateY(180deg) }
-.face{
-  position:absolute;
-  inset:0;
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  backface-visibility:hidden;
-}
-.front{
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.18);
-}
-.front .gift{
-  font-size:34px;
-  filter:drop-shadow(0 10px 15px rgba(0,0,0,.2));
-}
-.back{
-  transform:rotateY(180deg);
+/* GAME */
+.grid{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.card{height:92px;border-radius:16px;position:relative;cursor:pointer;
+  transform-style:preserve-3d;transition:transform .45s;}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  backface-visibility:hidden;}
+.front{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.18);}
+.front .gift{font-size:34px;}
+.back{transform:rotateY(180deg);
   background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.16);
-}
-.back .emo{
-  font-size:42px;
-  filter:drop-shadow(0 10px 15px rgba(0,0,0,.2));
-}
-.card.matched{
-  cursor:default;
-  outline:2px solid rgba(255,255,255,.45);
-  box-shadow:0 0 0 4px rgba(255,255,255,.15);
-}
+  border:1px solid rgba(255,255,255,.16);}
+.back .emo{font-size:42px;}
+.card.matched{outline:2px solid rgba(255,255,255,.45);}
 
-/* ===== SUCCESS ===== */
-.big{
-  font-size:44px;
-  margin-top:8px;
-  text-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-.badge{
-  display:inline-block;
-  padding:8px 12px;
-  border-radius:999px;
-  background:rgba(255,255,255,.16);
-  margin-top:10px;
-}
-
-/* ===== MESSAGE BOX ===== */
+/* MESSAGE */
 .msgbox{
-  margin-top:14px;
-  text-align:left;
+  margin-top:14px;text-align:left;
   background:rgba(255,255,255,.12);
   border:1px solid rgba(255,255,255,.14);
-  border-radius:16px;
-  padding:14px 14px;
-  max-height:45vh;
-  overflow:auto;
+  border-radius:16px;padding:14px;
+  max-height:45vh;overflow:auto;
 }
 .msgline{
-  margin-top:10px;
-  font-size:16px;
-  line-height:1.5;
+  margin-top:10px;font-size:16px;line-height:1.55;
+  opacity:0;transform:translateY(6px);
+  animation:reveal .35s ease forwards;
+}
+@keyframes reveal{
+  to{opacity:1;transform:translateY(0)}
 }
 
-/* ===== POLAROID ===== */
-.polaroid{
-  background:white;
-  padding:10px 10px 30px;
-  border-radius:12px;
+/* PHOTO STACK */
+.gallery{margin-top:14px;display:flex;flex-direction:column;gap:22px;align-items:center;}
+.stackrow{position:relative;width:100%;max-width:420px;height:240px;}
+.stackrow .polaroid{
+  position:absolute;top:0;width:58%;max-width:260px;
+  background:white;padding:10px 10px 30px;border-radius:12px;
   box-shadow:0 15px 30px rgba(0,0,0,.3);
-  color:#333;
-  width:85%;
-  max-width:320px;
-  margin:18px auto 6px;
-  position:relative;
 }
-.polaroid img{
-  width:100%;
-  border-radius:8px;
-  display:block;
-}
+.polaroid img{width:100%;border-radius:8px;display:block;}
 .tape{
-  width:70px;height:18px;
-  background:rgba(255,255,255,.75);
-  position:absolute;
-  top:-10px;left:50%;
+  width:70px;height:18px;background:rgba(255,255,255,.75);
+  position:absolute;top:-10px;left:50%;
   transform:translateX(-50%) rotate(-5deg);
   border-radius:4px;
 }
+.stackrow .left{left:0;transform:rotate(-7deg);}
+.stackrow .right{right:0;top:18px;transform:rotate(7deg);}
 
-/* ===== CONFETTI BURST (WIN) ===== */
+/* CONFETTI */
 .win-confetti{
-  position:fixed;
-  width:10px;
-  height:14px;
-  border-radius:2px;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  animation:winPop 1100ms cubic-bezier(.2,.8,.2,1) forwards;
-  will-change:transform, opacity;
-  z-index:9999;
-  pointer-events:none;
+  position:fixed;width:10px;height:14px;border-radius:2px;
+  left:50%;top:50%;animation:winPop 1100ms forwards;
+  z-index:9999;pointer-events:none;
 }
 @keyframes winPop{
-  0%{opacity:1; transform:translate(-50%,-50%) translate(0,0) rotate(0deg) scale(1)}
-  100%{opacity:0; transform:translate(-50%,-50%) translate(var(--x),var(--y)) rotate(720deg) scale(.3)}
+  0%{opacity:1;transform:translate(-50%,-50%)}
+  100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(720deg)}
 }
 </style>
 </head>
 
 <body>
 <div class="bg" id="bg"></div>
-
 <div class="wrap">
   <div id="app" class="container"></div>
 </div>
 
 <script>
-/* =========================
-   GLOBALS
-========================= */
-const app = document.getElementById("app");
-const bg  = document.getElementById("bg");
+const app=document.getElementById("app");
+const bg=document.getElementById("bg");
 const rainbow=["#ff4d4d","#ff8a3d","#ffd23f","#4cd964","#5ac8fa","#5856d6","#ff2d55"];
+const EMOJIS=["🍓","🐻","🌸","🎂"];
+let config=null,deck=[],first=null,lock=false,matchedCount=0;
 
-// 4 emoji unik → jadi 8 kotak (4 pasang)
-const EMOJIS = ["🍓","🐻","🌸","🎂"];
-
-let config = null;
-
-// Game
-let deck = [];
-let first = null;
-let lock = false;
-let matchedCount = 0;
-
-/* =========================
-   BACKGROUND GENERATOR
-========================= */
+/* BACKGROUND */
 function spawnBackground(){
-  for(let i=0;i<14;i++){
+  for(let i=0;i<12;i++){
     const b=document.createElement("div");
     b.className="balloon-bg";
-    b.style.left = Math.random()*100 + "vw";
-    b.style.background = rainbow[Math.floor(Math.random()*rainbow.length)];
-    b.style.animationDuration = (10 + Math.random()*10) + "s";
-    b.style.animationDelay = (-Math.random()*10) + "s";
-    b.style.setProperty("--drift", ((Math.random()-0.5)*120) + "px");
+    b.style.left=Math.random()*100+"vw";
+    b.style.background=rainbow[Math.floor(Math.random()*rainbow.length)];
+    b.style.animationDuration=(10+Math.random()*10)+"s";
+    b.style.setProperty("--drift",((Math.random()-0.5)*120)+"px");
     bg.appendChild(b);
-  }
-
-  for(let i=0;i<45;i++){
-    const p=document.createElement("div");
-    p.className="paper";
-    p.style.left=Math.random()*100+"vw";
-    p.style.background=rainbow[Math.floor(Math.random()*rainbow.length)];
-    p.style.animationDuration=(3+Math.random()*3)+"s";
-    p.style.animationDelay=(-Math.random()*3)+"s";
-    bg.appendChild(p);
   }
 }
 spawnBackground();
 
-/* =========================
-   HELPERS
-========================= */
-function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
-  }
-  return arr;
-}
-
-// ===== SOUND: "ting!" (WebAudio) =====
-let audioCtx;
+/* UTIL */
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function playTing(){
-  try{
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-
-    o.type = "sine";
-    o.frequency.setValueAtTime(880, audioCtx.currentTime);
-    g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.25, audioCtx.currentTime + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.18);
-
-    o.connect(g);
-    g.connect(audioCtx.destination);
-
-    o.start();
-    o.stop(audioCtx.currentTime + 0.2);
-  }catch(e){}
+  const ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.frequency.value=880;o.connect(g);g.connect(ctx.destination);
+  g.gain.setValueAtTime(0.3,ctx.currentTime);
+  o.start();o.stop(ctx.currentTime+0.2);
 }
-
-// ===== WIN CONFETTI BURST =====
 function winConfettiBurst(){
-  for(let i=0;i<120;i++){
+  for(let i=0;i<100;i++){
     const c=document.createElement("div");
     c.className="win-confetti";
-    c.style.background = rainbow[Math.floor(Math.random()*rainbow.length)];
-
+    c.style.background=rainbow[Math.floor(Math.random()*rainbow.length)];
     const angle=Math.random()*Math.PI*2;
-    const dist=180 + Math.random()*260;
-    const x=Math.cos(angle)*dist + "px";
-    const y=Math.sin(angle)*dist + "px";
-    c.style.setProperty("--x", x);
-    c.style.setProperty("--y", y);
-
-    c.style.left = (40 + Math.random()*20) + "vw";
-    c.style.top  = (35 + Math.random()*20) + "vh";
-
-    c.style.width  = (6 + Math.random()*8) + "px";
-    c.style.height = (8 + Math.random()*10) + "px";
-
+    const dist=200+Math.random()*200;
+    c.style.setProperty("--x",Math.cos(angle)*dist+"px");
+    c.style.setProperty("--y",Math.sin(angle)*dist+"px");
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(),1200);
+    setTimeout(()=>c.remove(),1100);
   }
 }
 
-function safeWaText(){
-  const t = (config?.waText || "").trim();
-  if(t) return t;
-  return `Happy birthday ${config?.name || ""} 🎉`;
-}
-
-/* =========================
-   LOAD CONFIG JSON
-========================= */
-function showLoading(){
-  app.innerHTML = `
-    <h2>Loading hadiah dulu yaa… 💖</h2>
-    <p class="note">Bentar aja ✨</p>
-  `;
-}
-function showJsonError(err){
-  app.innerHTML = `
-    <h2>data.json belum kebaca 😢</h2>
-    <p class="note">Cek ya: file <b>data.json</b> harus sejajar sama <b>index.html</b> dan JSON-nya valid.</p>
-    <p class="note" style="opacity:.75">${String(err || "")}</p>
-  `;
-}
-
+/* LOAD JSON */
 async function loadConfig(){
-  showLoading();
-  try{
-    const res = await fetch("data.json", { cache:"no-store" });
-    if(!res.ok) throw new Error("Gagal load data.json (HTTP " + res.status + ")");
-    config = await res.json();
-    showStart();
-  }catch(e){
-    showJsonError(e);
-  }
+  const res=await fetch("data.json");
+  config=await res.json();
+  showStart();
 }
 
-/* =========================
-   APP FLOW
-========================= */
+/* FLOW */
 function showStart(){
-  app.innerHTML = `
-    <h2>Haiii ${config?.name || "Bestie"} 🎉</h2>
-    <p class="note">Aku ada game nih… kalau kamu menang, hadiahnya kebuka 😆</p>
-    <button class="btn" id="startBtn">🎮 Start Game</button>
+  app.innerHTML=`
+    <h2>Haiii ${config.name} 🎉</h2>
+    <p class="note">Main dulu ya 😆</p>
+    <button class="btn" onclick="startGame()">Start Game</button>
   `;
-  document.getElementById("startBtn").onclick = () => startGame();
 }
 
-/* =========================
-   MEMORY GAME (8 cards, emoji)
-========================= */
 function startGame(){
-  deck = shuffle([...EMOJIS, ...EMOJIS].map((emo, idx)=>({ id: idx, emo })));
-  first = null;
-  lock = false;
-  matchedCount = 0;
-
-  app.innerHTML = `
-    <h2>🎁 Cocokkan Emot-nya ya!</h2>
-    <p class="note">Total 8 kotak (4 pasang). Klik kado untuk buka kartu.</p>
-    <div class="grid" id="grid"></div>
-  `;
-
-  const grid = document.getElementById("grid");
-  deck.forEach((cardData, index)=>{
+  deck=shuffle([...EMOJIS,...EMOJIS]);
+  matchedCount=0;first=null;lock=false;
+  app.innerHTML=`<h2>Cocokkan Emot 🎁</h2><div class="grid" id="grid"></div>`;
+  const grid=document.getElementById("grid");
+  deck.forEach((emo,i)=>{
     const card=document.createElement("div");
     card.className="card";
-    card.dataset.index = index;
-
-    card.innerHTML = `
+    card.innerHTML=`
       <div class="face front"><div class="gift">🎁</div></div>
-      <div class="face back"><div class="emo">${cardData.emo}</div></div>
+      <div class="face back"><div class="emo">${emo}</div></div>
     `;
-
-    card.onclick = () => flipCard(card);
+    card.onclick=()=>flipCard(card,i);
     grid.appendChild(card);
   });
 }
 
-function flipCard(cardEl){
-  if(lock) return;
-  if(cardEl.classList.contains("matched")) return;
-  if(cardEl === first) return;
-
-  cardEl.classList.add("flipped");
-
-  const idx = Number(cardEl.dataset.index);
-  const picked = deck[idx];
-
-  if(!first){
-    first = cardEl;
-    first._picked = picked;
-    return;
-  }
-
-  const second = cardEl;
-  const firstPicked = first._picked;
-  const secondPicked = picked;
-
-  lock = true;
-  const isMatch = firstPicked.emo === secondPicked.emo;
-
-  setTimeout(()=>{
-    if(isMatch){
-      playTing(); // ✅ ting!
-
-      first.classList.add("matched");
-      second.classList.add("matched");
-      matchedCount += 2;
-
-      if(matchedCount === deck.length){
-        winConfettiBurst(); // ✅ ledakan confetti
-        showWin();
-      }
-    } else {
+function flipCard(card,i){
+  if(lock||card.classList.contains("matched")||card===first) return;
+  card.classList.add("flipped");
+  if(!first){first=card;first.dataset.emo=deck[i];return;}
+  lock=true;
+  if(first.dataset.emo===deck[i]){
+    playTing();
+    first.classList.add("matched");
+    card.classList.add("matched");
+    matchedCount+=2;
+    if(matchedCount===deck.length){winConfettiBurst();showMessage();}
+  }else{
+    setTimeout(()=>{
       first.classList.remove("flipped");
-      second.classList.remove("flipped");
-    }
-
-    first = null;
-    lock = false;
-  }, 520);
+      card.classList.remove("flipped");
+    },600);
+  }
+  first=null;lock=false;
 }
 
-/* =========================
-   PAGES
-========================= */
-function showWin(){
-  app.innerHTML = `
-    <div class="badge">✅ Semua pasangan cocok!</div>
-    <h2>Kamu berhasil!</h2>
-    <p class="note">Sekarang lanjut yaa 😆</p>
-    <button class="btn" id="toMessage">Next ➜</button>
-  `;
-  document.getElementById("toMessage").onclick = () => showMessage();
-}
-
+/* MESSAGE AUTO REVEAL */
 function showMessage(){
-  const lines = String(config?.message || "").split("\n");
-
-  app.innerHTML = `
-    <h2>Ucapan untuk kamu 💌</h2>
-    <div class="msgbox" id="msg"></div>
-    <button class="btn" id="toPhoto">Next ➜</button>
-  `;
-
-  const msg = document.getElementById("msg");
-  lines.forEach((t)=>{
+  const lines=config.message.split("\n");
+  app.innerHTML=`<h2>Ucapan 💌</h2><div class="msgbox" id="msg"></div>`;
+  const msg=document.getElementById("msg");
+  let i=0;
+  function next(){
+    if(i>=lines.length){setTimeout(showPhoto,1000);return;}
     const div=document.createElement("div");
     div.className="msgline";
-    div.textContent=t;
+    div.textContent=lines[i];
     msg.appendChild(div);
-  });
-
-  document.getElementById("toPhoto").onclick = () => showPhoto();
-}
-
-function showPhoto(){
-  const photo = (config?.photos && config.photos[0]) ? config.photos[0] : "https://via.placeholder.com/320";
-  app.innerHTML = `
-    <h2>Kenangan Kita 📸</h2>
-    <div class="polaroid">
-      <div class="tape"></div>
-      <img src="${photo}" alt="kenangan">
-    </div>
-    <p class="note">${config?.date || ""}</p>
-    <button class="btn" id="waBtn">Chat Aku 💬</button>
-  `;
-
-  document.getElementById("waBtn").onclick = () => openWA();
-}
-
-function openWA(){
-  const number = String(config?.waNumber || "").trim();
-  if(!number){
-    alert("waNumber belum diisi di data.json ya kak 😅");
-    return;
+    msg.scrollTop=msg.scrollHeight;
+    i++;setTimeout(next,220);
   }
-  const url = `https://wa.me/${number}?text=${encodeURIComponent(safeWaText())}`;
-  window.open(url,"_blank");
+  next();
 }
 
-/* =========================
-   START
-========================= */
+/* PHOTO STACK */
+function showPhoto(){
+  app.innerHTML=`<h2>Kenangan Kita 📸</h2><div class="gallery" id="gallery"></div>`;
+  const gallery=document.getElementById("gallery");
+  for(let i=0;i<config.photos.length;i+=2){
+    const row=document.createElement("div");
+    row.className="stackrow";
+    row.innerHTML=`
+      <div class="polaroid left">
+        <div class="tape"></div>
+        <img src="${config.photos[i]}">
+      </div>
+      ${config.photos[i+1]?`
+      <div class="polaroid right">
+        <div class="tape"></div>
+        <img src="${config.photos[i+1]}">
+      </div>`:""}
+    `;
+    gallery.appendChild(row);
+  }
+}
+
 loadConfig();
 </script>
-
 </body>
 </html>

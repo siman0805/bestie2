@@ -163,6 +163,36 @@ body{
     transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(720deg);
   }
 }
+/* MODAL FULLSCREEN */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(5px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  animation:fadeIn .3s ease;
+}
+
+.modal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:16px;
+  box-shadow:0 10px 40px rgba(0,0,0,.6);
+  animation:zoomIn .3s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes zoomIn{
+  from{transform:scale(.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
 </style>
 </head>
 
@@ -308,21 +338,50 @@ function revealLine(){
 /* FOTO */
 function showPhoto(){
   window.scrollTo(0,0);
-  app.innerHTML=`<h2>Kenangan Kita 📸</h2><div class="gallery" id="gallery"></div>`;
+
+  app.innerHTML=`
+    <h2>Kenangan Kita 📸</h2>
+    <div class="gallery" id="gallery"></div>
+    <button class="btn" onclick="openWA()">💬 Ucapin Sesuatu</button>
+  `;
 
   const gallery=document.getElementById("gallery");
 
   for(let i=0;i<config.photos.length;i+=2){
     const row=document.createElement("div");
     row.className="stackrow";
+
     row.innerHTML=`
-      <div class="polaroid left"><img src="${config.photos[i]}"></div>
-      ${config.photos[i+1]?`<div class="polaroid right"><img src="${config.photos[i+1]}"></div>`:""}
+      <div class="polaroid left" onclick="openModal('${config.photos[i]}')">
+        <img src="${config.photos[i]}">
+      </div>
+      ${config.photos[i+1]?`
+      <div class="polaroid right" onclick="openModal('${config.photos[i+1]}')">
+        <img src="${config.photos[i+1]}">
+      </div>`:""}
     `;
+
     gallery.appendChild(row);
   }
 }
 
+function openModal(src){
+  const modal=document.createElement("div");
+  modal.className="modal";
+
+  const img=document.createElement("img");
+  img.src=src;
+
+  // supaya klik gambar tidak menutup modal
+  img.onclick=(e)=>e.stopPropagation();
+
+  modal.appendChild(img);
+
+  // klik area gelap untuk tutup
+  modal.onclick=()=>modal.remove();
+
+  document.body.appendChild(modal);
+}
 loadConfig();
 </script>
 

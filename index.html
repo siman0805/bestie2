@@ -193,6 +193,17 @@ body{
   from{transform:scale(.8);opacity:0}
   to{transform:scale(1);opacity:1}
 }
+/* TEXT PETUNJUK MODAL */
+.modal .hint{
+  position:absolute;
+  bottom:30px;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:14px;
+  opacity:.8;
+  letter-spacing:.5px;
+}
 </style>
 </head>
 
@@ -375,7 +386,12 @@ function openModal(src){
   // supaya klik gambar tidak menutup modal
   img.onclick=(e)=>e.stopPropagation();
 
+  const hint=document.createElement("div");
+  hint.className="hint";
+  hint.textContent="Klik di mana saja untuk keluar";
+
   modal.appendChild(img);
+  modal.appendChild(hint);
 
   // klik area gelap untuk tutup
   modal.onclick=()=>modal.remove();

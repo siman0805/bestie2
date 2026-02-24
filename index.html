@@ -3,12 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#ff4fa3" />
 <title>Happy Birthday 🎉</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%}
 body{
   font-family:Arial,sans-serif;
   min-height:100vh;
@@ -18,62 +16,51 @@ body{
   overflow-y:auto;
   background:linear-gradient(135deg,#ff9ecf,#ffc3e6,#c8b6ff);
 }
-
-/* BACKGROUND */
-.bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;}
-.bg .balloon-bg{
-  position:absolute;bottom:-120px;width:70px;height:90px;border-radius:50%;
-  opacity:.33;animation:rise linear infinite;
-}
-@keyframes rise{
-  from{transform:translateY(0)}
-  to{transform:translateY(-120vh)}
-}
-
-/* LAYOUT */
-.wrap{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;}
+.wrap{display:flex;justify-content:center;padding:20px;}
 .container{
-  width:95%;max-width:560px;background:rgba(0,0,0,.25);
-  padding:24px;border-radius:22px;backdrop-filter:blur(12px);
-  box-shadow:0 20px 50px rgba(0,0,0,.25);
+  width:95%;max-width:560px;
+  background:rgba(0,0,0,.25);
+  padding:24px;border-radius:20px;
+  backdrop-filter:blur(10px);
 }
-
-.note{margin-top:10px;font-size:14px;opacity:.85;}
 .btn{
   width:100%;padding:12px;border:none;border-radius:12px;
-  background:white;color:#ff4fa3;font-weight:800;
+  background:white;color:#ff4fa3;font-weight:bold;
   cursor:pointer;margin-top:16px;
 }
 
 /* GAME */
 .grid{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-.card{height:90px;border-radius:16px;position:relative;cursor:pointer;
-  transform-style:preserve-3d;transition:.4s;}
+.card{
+  height:90px;border-radius:16px;
+  position:relative;cursor:pointer;
+  transform-style:preserve-3d;
+  transition:.4s;
+}
 .card.flipped{transform:rotateY(180deg);}
-.face{position:absolute;inset:0;border-radius:16px;
+.face{
+  position:absolute;inset:0;border-radius:16px;
   display:flex;align-items:center;justify-content:center;
-  backface-visibility:hidden;}
+  backface-visibility:hidden;
+}
 .front{background:rgba(255,255,255,.2);}
 .back{background:rgba(255,255,255,.1);transform:rotateY(180deg);}
+.front .gift{font-size:32px;}
 .back .emo{font-size:40px;}
-.front .gift{font-size:34px;}
 .card.matched{outline:2px solid white;}
 
 /* MESSAGE */
-.msgarea{margin-top:18px;text-align:left;}
+.msgarea{text-align:left;margin-top:16px;}
 .msgline{
-  margin-top:12px;
-  font-size:16px;
-  line-height:1.6;
-  opacity:0;
-  transform:translateY(8px);
-  animation:fadeUp .4s ease forwards;
+  margin-top:10px;font-size:16px;line-height:1.6;
+  opacity:0;transform:translateY(8px);
+  animation:fadeUp .4s forwards;
 }
 @keyframes fadeUp{
   to{opacity:1;transform:translateY(0);}
 }
 
-/* PHOTO STACK */
+/* PHOTO */
 .gallery{
   margin-top:20px;
   display:flex;
@@ -98,33 +85,25 @@ body{
   box-shadow:0 15px 30px rgba(0,0,0,.3);
   cursor:pointer;
 }
-.polaroid img{
-  width:100%;
-  border-radius:8px;
-}
+.polaroid img{width:100%;border-radius:8px;}
 .left{left:0;transform:rotate(-8deg);}
 .right{right:0;top:20px;transform:rotate(8deg);}
 
 /* FULLSCREEN */
 .modal{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:rgba(0,0,0,.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex;align-items:center;justify-content:center;
   z-index:9999;
 }
 .modal img{
-  max-width:90%;
-  max-height:90%;
+  max-width:90%;max-height:90%;
   border-radius:12px;
 }
 </style>
 </head>
 
 <body>
-<div class="bg" id="bg"></div>
 <div class="wrap">
   <div id="app" class="container"></div>
 </div>
@@ -141,10 +120,11 @@ async function loadConfig(){
   showStart();
 }
 
-/* START */
+/* START PAGE */
 function showStart(){
   app.innerHTML=`
     <h2>Hai ${config.name} 🎉</h2>
+    <p style="margin-top:10px;">Main dulu yuk… kalau menang baru lanjut 😆</p>
     <button class="btn" onclick="startGame()">Start Game</button>
   `;
 }
@@ -154,7 +134,11 @@ function startGame(){
   deck=[...EMOJIS,...EMOJIS].sort(()=>Math.random()-0.5);
   matched=0;first=null;lock=false;
 
-  app.innerHTML=`<h2>Cocokkan Emot 🎁</h2><div class="grid" id="grid"></div>`;
+  app.innerHTML=`
+    <h2>Cocokkan Emot 🎁</h2>
+    <p style="margin-top:8px;">Kalau salah nanti ketutup lagi ya 😆</p>
+    <div class="grid" id="grid"></div>
+  `;
   const grid=document.getElementById("grid");
 
   deck.forEach((emo,i)=>{
@@ -171,54 +155,65 @@ function startGame(){
 
 function flip(card,i){
   if(lock||card.classList.contains("matched")||card===first) return;
+
   card.classList.add("flipped");
 
-  if(!first){first=card;first.dataset.emo=deck[i];return;}
+  if(!first){
+    first=card;
+    first.dataset.emo=deck[i];
+    return;
+  }
+
   lock=true;
 
   if(first.dataset.emo===deck[i]){
     first.classList.add("matched");
     card.classList.add("matched");
     matched+=2;
+
     if(matched===deck.length){
       setTimeout(showMessage,800);
     }
+    lock=false;
+    first=null;
   }else{
     setTimeout(()=>{
       first.classList.remove("flipped");
       card.classList.remove("flipped");
-    },600);
+      first=null;
+      lock=false;
+    },700);
   }
-  first=null;lock=false;
 }
 
-/* MESSAGE */
+/* MESSAGE PAGE */
 function showMessage(){
   const lines=config.message.split("\n");
-  app.innerHTML=`<h2>Ucapan 💌</h2><div class="msgarea" id="msg"></div>`;
+
+  app.innerHTML=`
+    <h2>Ucapan 💌</h2>
+    <div class="msgarea" id="msg"></div>
+    <button class="btn" onclick="showPhoto()">Selanjutnya ➜</button>
+  `;
+
   const msg=document.getElementById("msg");
 
-  let i=0;
-  function next(){
-    if(i>=lines.length){
-      setTimeout(showPhoto,1500);
-      return;
-    }
-    if(lines[i].trim()!==""){
+  lines.forEach(line=>{
+    if(line.trim()!==""){
       const div=document.createElement("div");
       div.className="msgline";
-      div.textContent=lines[i];
+      div.textContent=line;
       msg.appendChild(div);
     }
-    i++;
-    setTimeout(next,220);
-  }
-  next();
+  });
 }
 
-/* PHOTO */
+/* PHOTO PAGE */
 function showPhoto(){
-  app.innerHTML=`<h2>Kenangan Kita 📸</h2><div class="gallery" id="gallery"></div>`;
+  app.innerHTML=`
+    <h2>Kenangan Kita 📸</h2>
+    <div class="gallery" id="gallery"></div>
+  `;
   const gallery=document.getElementById("gallery");
 
   for(let i=0;i<config.photos.length;i+=2){

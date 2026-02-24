@@ -14,7 +14,8 @@ body{
   min-height:100vh;
   color:white;
   text-align:center;
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:auto;
   background:linear-gradient(135deg,#ff9ecf,#ffc3e6,#c8b6ff);
 }
 
@@ -23,100 +24,101 @@ body{
 .bg .balloon-bg{
   position:absolute;bottom:-120px;width:70px;height:90px;border-radius:50%;
   opacity:.33;animation:rise linear infinite;
-  box-shadow: inset -12px -14px rgba(0,0,0,.15);
-}
-.bg .balloon-bg:after{
-  content:"";position:absolute;width:2px;height:70px;
-  background:rgba(255,255,255,.65);
-  left:50%;bottom:-70px;transform:translateX(-50%);
 }
 @keyframes rise{
-  from{transform:translateY(0) translateX(0)}
-  to{transform:translateY(-120vh) translateX(var(--drift))}
-}
-.bg .paper{
-  position:absolute;top:-20px;width:10px;height:14px;
-  opacity:.55;border-radius:2px;animation:fall linear infinite;
-}
-@keyframes fall{
-  to{transform:translateY(120vh) rotate(720deg)}
+  from{transform:translateY(0)}
+  to{transform:translateY(-120vh)}
 }
 
 /* LAYOUT */
 .wrap{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;}
 .container{
-  width:95%;max-width:560px;background:rgba(0,0,0,.22);
+  width:95%;max-width:560px;background:rgba(0,0,0,.25);
   padding:24px;border-radius:22px;backdrop-filter:blur(12px);
   box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
-h1,h2{font-weight:900}
-.note{margin-top:10px;font-size:14px;opacity:.85;line-height:1.4;}
+
+.note{margin-top:10px;font-size:14px;opacity:.85;}
 .btn{
-  width:100%;padding:12px 18px;border:none;border-radius:12px;
+  width:100%;padding:12px;border:none;border-radius:12px;
   background:white;color:#ff4fa3;font-weight:800;
   cursor:pointer;margin-top:16px;
 }
 
 /* GAME */
 .grid{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-.card{height:92px;border-radius:16px;position:relative;cursor:pointer;
-  transform-style:preserve-3d;transition:transform .45s;}
-.card.flipped{transform:rotateY(180deg)}
+.card{height:90px;border-radius:16px;position:relative;cursor:pointer;
+  transform-style:preserve-3d;transition:.4s;}
+.card.flipped{transform:rotateY(180deg);}
 .face{position:absolute;inset:0;border-radius:16px;
   display:flex;align-items:center;justify-content:center;
   backface-visibility:hidden;}
-.front{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.18);}
+.front{background:rgba(255,255,255,.2);}
+.back{background:rgba(255,255,255,.1);transform:rotateY(180deg);}
+.back .emo{font-size:40px;}
 .front .gift{font-size:34px;}
-.back{transform:rotateY(180deg);
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.16);}
-.back .emo{font-size:42px;}
-.card.matched{outline:2px solid rgba(255,255,255,.45);}
+.card.matched{outline:2px solid white;}
 
 /* MESSAGE */
-.msgbox{
-  margin-top:14px;text-align:left;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:16px;padding:14px;
-  max-height:45vh;overflow:auto;
-}
+.msgarea{margin-top:18px;text-align:left;}
 .msgline{
-  margin-top:10px;font-size:16px;line-height:1.55;
-  opacity:0;transform:translateY(6px);
-  animation:reveal .35s ease forwards;
+  margin-top:12px;
+  font-size:16px;
+  line-height:1.6;
+  opacity:0;
+  transform:translateY(8px);
+  animation:fadeUp .4s ease forwards;
 }
-@keyframes reveal{
-  to{opacity:1;transform:translateY(0)}
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0);}
 }
 
 /* PHOTO STACK */
-.gallery{margin-top:14px;display:flex;flex-direction:column;gap:22px;align-items:center;}
-.stackrow{position:relative;width:100%;max-width:420px;height:240px;}
-.stackrow .polaroid{
-  position:absolute;top:0;width:58%;max-width:260px;
-  background:white;padding:10px 10px 30px;border-radius:12px;
+.gallery{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:50px;
+  align-items:center;
+  padding-bottom:40px;
+}
+.stackrow{
+  position:relative;
+  width:100%;
+  max-width:500px;
+  height:260px;
+}
+.polaroid{
+  position:absolute;
+  width:60%;
+  max-width:280px;
+  background:white;
+  padding:10px 10px 30px;
+  border-radius:12px;
   box-shadow:0 15px 30px rgba(0,0,0,.3);
+  cursor:pointer;
 }
-.polaroid img{width:100%;border-radius:8px;display:block;}
-.tape{
-  width:70px;height:18px;background:rgba(255,255,255,.75);
-  position:absolute;top:-10px;left:50%;
-  transform:translateX(-50%) rotate(-5deg);
-  border-radius:4px;
+.polaroid img{
+  width:100%;
+  border-radius:8px;
 }
-.stackrow .left{left:0;transform:rotate(-7deg);}
-.stackrow .right{right:0;top:18px;transform:rotate(7deg);}
+.left{left:0;transform:rotate(-8deg);}
+.right{right:0;top:20px;transform:rotate(8deg);}
 
-/* CONFETTI */
-.win-confetti{
-  position:fixed;width:10px;height:14px;border-radius:2px;
-  left:50%;top:50%;animation:winPop 1100ms forwards;
-  z-index:9999;pointer-events:none;
+/* FULLSCREEN */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
-@keyframes winPop{
-  0%{opacity:1;transform:translate(-50%,-50%)}
-  100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(720deg)}
+.modal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
 }
 </style>
 </head>
@@ -129,47 +131,8 @@ h1,h2{font-weight:900}
 
 <script>
 const app=document.getElementById("app");
-const bg=document.getElementById("bg");
-const rainbow=["#ff4d4d","#ff8a3d","#ffd23f","#4cd964","#5ac8fa","#5856d6","#ff2d55"];
 const EMOJIS=["🍓","🐻","🌸","🎂"];
-let config=null,deck=[],first=null,lock=false,matchedCount=0;
-
-/* BACKGROUND */
-function spawnBackground(){
-  for(let i=0;i<12;i++){
-    const b=document.createElement("div");
-    b.className="balloon-bg";
-    b.style.left=Math.random()*100+"vw";
-    b.style.background=rainbow[Math.floor(Math.random()*rainbow.length)];
-    b.style.animationDuration=(10+Math.random()*10)+"s";
-    b.style.setProperty("--drift",((Math.random()-0.5)*120)+"px");
-    bg.appendChild(b);
-  }
-}
-spawnBackground();
-
-/* UTIL */
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function playTing(){
-  const ctx=new (window.AudioContext||window.webkitAudioContext)();
-  const o=ctx.createOscillator(),g=ctx.createGain();
-  o.frequency.value=880;o.connect(g);g.connect(ctx.destination);
-  g.gain.setValueAtTime(0.3,ctx.currentTime);
-  o.start();o.stop(ctx.currentTime+0.2);
-}
-function winConfettiBurst(){
-  for(let i=0;i<100;i++){
-    const c=document.createElement("div");
-    c.className="win-confetti";
-    c.style.background=rainbow[Math.floor(Math.random()*rainbow.length)];
-    const angle=Math.random()*Math.PI*2;
-    const dist=200+Math.random()*200;
-    c.style.setProperty("--x",Math.cos(angle)*dist+"px");
-    c.style.setProperty("--y",Math.sin(angle)*dist+"px");
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),1100);
-  }
-}
+let config=null,deck=[],first=null,lock=false,matched=0;
 
 /* LOAD JSON */
 async function loadConfig(){
@@ -178,20 +141,22 @@ async function loadConfig(){
   showStart();
 }
 
-/* FLOW */
+/* START */
 function showStart(){
   app.innerHTML=`
-    <h2>Haiii ${config.name} 🎉</h2>
-    <p class="note">Main dulu ya 😆</p>
+    <h2>Hai ${config.name} 🎉</h2>
     <button class="btn" onclick="startGame()">Start Game</button>
   `;
 }
 
+/* GAME */
 function startGame(){
-  deck=shuffle([...EMOJIS,...EMOJIS]);
-  matchedCount=0;first=null;lock=false;
+  deck=[...EMOJIS,...EMOJIS].sort(()=>Math.random()-0.5);
+  matched=0;first=null;lock=false;
+
   app.innerHTML=`<h2>Cocokkan Emot 🎁</h2><div class="grid" id="grid"></div>`;
   const grid=document.getElementById("grid");
+
   deck.forEach((emo,i)=>{
     const card=document.createElement("div");
     card.className="card";
@@ -199,22 +164,25 @@ function startGame(){
       <div class="face front"><div class="gift">🎁</div></div>
       <div class="face back"><div class="emo">${emo}</div></div>
     `;
-    card.onclick=()=>flipCard(card,i);
+    card.onclick=()=>flip(card,i);
     grid.appendChild(card);
   });
 }
 
-function flipCard(card,i){
+function flip(card,i){
   if(lock||card.classList.contains("matched")||card===first) return;
   card.classList.add("flipped");
+
   if(!first){first=card;first.dataset.emo=deck[i];return;}
   lock=true;
+
   if(first.dataset.emo===deck[i]){
-    playTing();
     first.classList.add("matched");
     card.classList.add("matched");
-    matchedCount+=2;
-    if(matchedCount===deck.length){winConfettiBurst();showMessage();}
+    matched+=2;
+    if(matched===deck.length){
+      setTimeout(showMessage,800);
+    }
   }else{
     setTimeout(()=>{
       first.classList.remove("flipped");
@@ -224,44 +192,59 @@ function flipCard(card,i){
   first=null;lock=false;
 }
 
-/* MESSAGE AUTO REVEAL */
+/* MESSAGE */
 function showMessage(){
   const lines=config.message.split("\n");
-  app.innerHTML=`<h2>Ucapan 💌</h2><div class="msgbox" id="msg"></div>`;
+  app.innerHTML=`<h2>Ucapan 💌</h2><div class="msgarea" id="msg"></div>`;
   const msg=document.getElementById("msg");
+
   let i=0;
   function next(){
-    if(i>=lines.length){setTimeout(showPhoto,1000);return;}
-    const div=document.createElement("div");
-    div.className="msgline";
-    div.textContent=lines[i];
-    msg.appendChild(div);
-    msg.scrollTop=msg.scrollHeight;
-    i++;setTimeout(next,220);
+    if(i>=lines.length){
+      setTimeout(showPhoto,1500);
+      return;
+    }
+    if(lines[i].trim()!==""){
+      const div=document.createElement("div");
+      div.className="msgline";
+      div.textContent=lines[i];
+      msg.appendChild(div);
+    }
+    i++;
+    setTimeout(next,220);
   }
   next();
 }
 
-/* PHOTO STACK */
+/* PHOTO */
 function showPhoto(){
   app.innerHTML=`<h2>Kenangan Kita 📸</h2><div class="gallery" id="gallery"></div>`;
   const gallery=document.getElementById("gallery");
+
   for(let i=0;i<config.photos.length;i+=2){
     const row=document.createElement("div");
     row.className="stackrow";
+
     row.innerHTML=`
-      <div class="polaroid left">
-        <div class="tape"></div>
+      <div class="polaroid left" onclick="openModal('${config.photos[i]}')">
         <img src="${config.photos[i]}">
       </div>
       ${config.photos[i+1]?`
-      <div class="polaroid right">
-        <div class="tape"></div>
+      <div class="polaroid right" onclick="openModal('${config.photos[i+1]}')">
         <img src="${config.photos[i+1]}">
       </div>`:""}
     `;
     gallery.appendChild(row);
   }
+}
+
+/* FULLSCREEN */
+function openModal(src){
+  const modal=document.createElement("div");
+  modal.className="modal";
+  modal.innerHTML=`<img src="${src}">`;
+  modal.onclick=()=>modal.remove();
+  document.body.appendChild(modal);
 }
 
 loadConfig();
